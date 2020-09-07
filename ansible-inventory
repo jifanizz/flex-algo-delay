@@ -1,0 +1,10 @@
+[xr]
+pe1 ansible_host=10.85.171.205 ansible_user=cisco ansible_network_os=iosxr ansible_ssh_pass=cisco
+p2 ansible_host=10.85.171.202 ansible_user=cisco ansible_network_os=iosxr ansible_ssh_pass=cisco
+p3 ansible_host=10.85.171.203 ansible_user=cisco ansible_network_os=iosxr ansible_ssh_pass=cisco
+p4 ansible_host=10.85.171.204 ansible_user=cisco ansible_network_os=iosxr ansible_ssh_pass=cisco
+pe5 ansible_host=10.85.171.206 ansible_user=cisco ansible_network_os=iosxr ansible_ssh_pass=cisco
+
+[xe]
+ce1 ansible_host=10.85.171.200 ansible_user=cisco ansible_network_os=ios ansible_ssh_pass=cisco
+ce2 ansible_host=10.85.171.201 ansible_user=cisco ansible_network_os=ios ansible_ssh_pass=cisco

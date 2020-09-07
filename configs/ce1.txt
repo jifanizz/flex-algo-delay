@@ -1,0 +1,229 @@
+Building configuration...
+
+Current configuration : 4769 bytes
+!
+! Last configuration change at 17:18:56 UTC Mon Sep 7 2020 by cisco
+!
+version 16.9
+service timestamps debug datetime msec
+service timestamps log datetime msec
+platform qfp utilization monitor load 80
+no platform punt-keepalive disable-kernel-core
+platform console serial
+!
+hostname ce1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+vrf definition Mgmt-intf
+ !
+ address-family ipv4
+ exit-address-family
+ !
+ address-family ipv6
+ exit-address-family
+!
+enable secret 4 tnhtc92DXBhelxjYk8LWJrPV36S2i4ntXrpb4RFmfqY
+enable password cisco
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+no ip domain lookup
+ip domain name virl.info
+ip admission watch-list expiry-time 0
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+! 
+! 
+! 
+! 
+!
+kerberos realm TEST.INFO TEST
+ipv6 unicast-routing
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-1535594962
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-1535594962
+ revocation-check none
+ rsakeypair TP-self-signed-1535594962
+!
+!
+crypto pki certificate chain TP-self-signed-1535594962
+ certificate self-signed 01
+  30820330 30820218 A0030201 02020101 300D0609 2A864886 F70D0101 05050030 
+  31312F30 2D060355 04031326 494F532D 53656C66 2D536967 6E65642D 43657274 
+  69666963 6174652D 31353335 35393439 3632301E 170D3230 30393034 31363035 
+  35395A17 0D333030 31303130 30303030 305A3031 312F302D 06035504 03132649 
+  4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D31 35333535 
+  39343936 32308201 22300D06 092A8648 86F70D01 01010500 0382010F 00308201 
+  0A028201 0100AE8E 54594BB6 8381482E 3FB01238 F8F7996D 0542C000 BFCAEC54 
+  2057BCF7 12E80AE9 84F8C554 690226F7 0EB78D29 DBFF14D2 FCADCC06 45C406C7 
+  0E2CA592 1F4AC9A9 6211D133 EFA91DCE 85AC51DE FFC76B1E 7CCE3C32 E26B6248 
+  24C2633C C45CE72C 541E5C84 40609F12 35416DD7 B6CDDF67 2ED05E82 141E89EA 
+  E621940B 934548E0 2997E62E E5498A36 3DD35E38 4D954866 20D05474 3CCE39D5 
+  357675D4 088B7B6C 591F6AD7 EB50F084 C933908C 20DE224A 8D1220E2 7E51B0C7 
+  8FF84D2B 29898824 E09D0F6E 2DEE4568 4D02ED36 444F9F9C BFB5F47F 3ED74B4C 
+  0A35FF9F 39A02447 62CD22A4 283F2CEA C81EF5AC EFA3A6D6 41B5D8F6 D2386775 
+  F6BC5202 7F4D0203 010001A3 53305130 0F060355 1D130101 FF040530 030101FF 
+  301F0603 551D2304 18301680 145BE474 B98219FF DC043041 4A04D579 2AE42990 
+  6F301D06 03551D0E 04160414 5BE474B9 8219FFDC 0430414A 04D5792A E429906F 
+  300D0609 2A864886 F70D0101 05050003 82010100 A4682955 7A9B6138 CB0F6742 
+  6B69FB13 2E3B16FF F01E8C42 4A6D6337 715AB1E5 1A7BB47B 20151CD6 DAD7EFBF 
+  0FE33899 583C7D77 A648DF8C 2352BB8D 239FF79B 7DCD02B7 BCBE3BE4 78280462 
+  2909056C 69FC12E5 02588E60 D520205F E17EDF2C BD524C9D 2FF553D1 30F279C9 
+  5EBFEE9A 7A499CBD AF9B4F2A 352022AB 6D52B76B 997820B9 47B8CB12 EBE37537 
+  A80BAAC2 D7E5D992 7CA83CDD 23CD44A9 7DEF7934 F0AC86DB 04E91FCE 17A579D2 
+  52F0C7B7 AB410697 A40F3FD9 83E754F8 36F3F3C3 A96E28C6 9ED3C2AC F251EA46 
+  44E3745D 9FCAA993 D71A5360 1FA56E46 7D2975AC B0FF06A9 DD133395 06DF17AA 
+  B0FB6CA1 45981DB4 DABF6241 A5620A4B A9921CF5
+  	quit
+!
+!
+!
+!
+!
+!
+!
+!
+license udi pid CSR1000V sn 9R6VNKU7OD1
+license accept end user agreement
+no license smart enable
+diagnostic bootup level minimal
+!
+spanning-tree extend system-id
+!
+!
+!
+username cisco privilege 15 secret 5 $1$GDDe$nTvAvbEMgFB/unc5Ce3ib.
+!
+redundancy
+!
+!
+!
+!
+!
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+! 
+! 
+!
+!
+interface Loopback0
+ description Loopback
+ ip address 192.168.0.1 255.255.255.255
+!
+interface Loopback1
+ ip address 2.2.2.2 255.255.255.255
+!
+interface Loopback2
+ ip address 2.2.2.3 255.255.255.255
+!
+interface GigabitEthernet1
+ description OOB Management
+ vrf forwarding Mgmt-intf
+ ip address 10.255.0.69 255.255.0.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet2
+ description to pe1
+ ip address 10.0.0.5 255.255.255.252
+ ip ospf cost 1
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet3
+ description to flat-1
+ ip address 10.85.171.200 255.255.255.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+router ospf 1
+ passive-interface Loopback0
+ network 10.0.0.4 0.0.0.3 area 0
+ network 192.168.0.1 0.0.0.0 area 0
+!
+router bgp 65001
+ bgp log-neighbor-changes
+ neighbor 10.0.0.6 remote-as 100
+ !
+ address-family ipv4
+  network 2.2.2.2 mask 255.255.255.255
+  network 2.2.2.3 mask 255.255.255.255
+  network 192.168.0.1 mask 255.255.255.255
+  neighbor 10.0.0.6 activate
+  neighbor 10.0.0.6 allowas-in
+ exit-address-family
+!
+ip forward-protocol nd
+ip http server
+ip http authentication local
+ip http secure-server
+ip route 0.0.0.0 0.0.0.0 10.85.171.1
+!
+ip ssh server algorithm authentication password
+!
+!
+!
+!
+!
+control-plane
+!
+!
+!
+!
+!
+!
+line con 0
+ password cisco
+ stopbits 1
+line vty 0 4
+ exec-timeout 720 0
+ privilege level 15
+ password cisco
+ login local
+ transport input telnet ssh
+!
+!
+!
+!
+!
+!
+end

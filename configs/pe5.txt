@@ -1,0 +1,207 @@
+Building configuration...
+!! IOS XR Configuration 7.1.1
+!! Last configuration change at Mon Sep  7 17:53:34 2020 by cisco
+!
+!  IOS-XR9000v Config generated on 2020-09-04 16:00
+! by autonetkit_0.24.1
+hostname pe5
+service timestamps log datetime msec
+service timestamps debug datetime msec
+domain name virl.info
+domain lookup disable
+telnet vrf default ipv4 server max-servers 10
+telnet vrf Mgmt-intf ipv4 server max-servers 10
+username cisco
+ group root-lr
+ group cisco-support
+ password 7 045802150C2E
+!
+username admin
+ group root-lr
+ group cisco-support
+ password 7 011202095205
+!
+username lab
+ group root-lr
+ group cisco-support
+ password 7 151E0A0E
+!
+vrf red
+ address-family ipv4 unicast
+  import route-target
+   100:1
+  !
+  export route-target
+   100:1
+  !
+ !
+!
+vrf Mgmt-intf
+ address-family ipv4 unicast
+ !
+ address-family ipv6 unicast
+ !
+!
+line template vty
+ timestamp
+ exec-timeout 720 0
+!
+line console
+ exec-timeout 0 0
+!
+line default
+ exec-timeout 720 0
+!
+vty-pool default 0 50
+call-home
+ service active
+ contact smart-licensing
+ profile CiscoTAC-1
+  active
+  destination transport-method http
+ !
+!
+control-plane
+ management-plane
+  inband
+   interface all
+    allow all
+   !
+  !
+ !
+!
+interface Loopback0
+ description Loopback
+ ipv4 address 1.1.1.5 255.255.255.255
+!
+interface MgmtEth0/RP0/CPU0/0
+ description OOB Management
+ ! Configured on launch
+ vrf Mgmt-intf
+ ipv4 address 10.255.0.75 255.255.0.0
+!
+interface GigabitEthernet0/0/0/0
+ description to p3
+ ipv4 address 10.0.0.26 255.255.255.252
+!
+interface GigabitEthernet0/0/0/1
+ description to p4
+ ipv4 address 10.0.0.30 255.255.255.252
+!
+interface GigabitEthernet0/0/0/2
+ description to ce2
+ vrf red
+ ipv4 address 10.0.0.22 255.255.255.252
+!
+interface GigabitEthernet0/0/0/3
+ description to flat-6
+ ipv4 address 10.85.171.206 255.255.255.0
+!
+extcommunity-set opaque RED
+  5001
+end-set
+!
+route-policy PASS
+  pass
+end-policy
+!
+route-policy vpnv4
+  if destination in (3.3.3.2/32) then
+    set extcommunity color RED
+  else
+    pass
+  endif
+end-policy
+!
+route-policy bgp_in
+  pass
+end-policy
+!
+route-policy bgp_out
+  pass
+end-policy
+!
+router static
+ address-family ipv4 unicast
+  0.0.0.0/0 10.85.171.1
+ !
+!
+router ospf 1
+ distribute link-state
+ log adjacency changes
+ segment-routing mpls
+ area 0
+  interface Loopback0
+   passive enable
+   prefix-sid absolute 16005
+   prefix-sid algorithm 128 absolute 16805
+  !
+  interface GigabitEthernet0/0/0/0
+   cost 1
+  !
+  interface GigabitEthernet0/0/0/1
+   cost 1
+  !
+ !
+ flex-algo 128
+  metric-type delay
+  advertise-definition
+ !
+!
+router bgp 100
+ bgp router-id 1.1.1.5
+ address-family vpnv4 unicast
+ !
+ neighbor-group RR
+  remote-as 100
+  update-source Loopback0
+  address-family vpnv4 unicast
+   route-policy vpnv4 out
+  !
+ !
+ neighbor 1.1.1.2
+  use neighbor-group RR
+ !
+ vrf red
+  rd 100:1
+  address-family ipv4 unicast
+   as-path-loopcheck out disable
+   redistribute connected
+  !
+  neighbor 10.0.0.21
+   remote-as 65001
+   address-family ipv4 unicast
+    route-policy PASS in
+    route-policy PASS out
+   !
+  !
+ !
+!
+mpls oam
+!
+mpls traffic-eng
+!
+segment-routing
+ traffic-eng
+  on-demand color 1001
+   dynamic
+    sid-algorithm 128
+   !
+  !
+ !
+!
+ssh server v2
+ssh server vrf Mgmt-intf
+performance-measurement
+ interface GigabitEthernet0/0/0/0
+  delay-measurement
+   advertise-delay 5000
+  !
+ !
+ interface GigabitEthernet0/0/0/1
+  delay-measurement
+   advertise-delay 20000
+  !
+ !
+!
+end
